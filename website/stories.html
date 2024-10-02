@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Romantic Stories - Stories</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(to bottom right, #ffcccb, #fffacd); /* Dark creamy pink mixed with light creamy yellow */
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #d87093;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 10px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            font-size: 20px;
+            color: #fff;
+            background-color: #c71585;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        section {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #storyList {
+            margin-top: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .story-item {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Published Stories</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Homepage</a></li>
+            <li><a href="publish.html">Publish</a></li>
+            <li><a href="stories.html">Stories</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <div id="storyList"></div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Romantic Stories | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        // Function to load stories from localStorage
+        function loadStories() {
+            const storedStories = JSON.parse(localStorage.getItem('stories')) || [];
+            const storyList = document.getElementById('storyList');
+            storedStories.forEach(story => {
+                const storyItem = document.createElement('div');
+                storyItem.classList.add('story-item');
+                storyItem.textContent = story;
+                storyList.prepend(storyItem);
+            });
+        }
+
+        // Load stories on page load
+        window.onload = loadStories;
+    </script>
+</body>
+</html>

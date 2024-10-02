@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Romantic Stories</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom right, #f7e0e7, #fdf5e6);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #d85a88;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        .nav-buttons {
+            margin-top: 20px;
+        }
+
+        .nav-button {
+            background-color: #ff69b4;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        .nav-button:hover {
+            background-color: #c71585;
+        }
+
+        .story-list {
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .story-item {
+            display: flex;
+            align-items: flex-start;
+            border-bottom: 1px solid #ddd;
+            padding: 15px 0;
+        }
+
+        .cover-art {
+            width: 100px;
+            height: auto;
+            margin-right: 15px;
+            border-radius: 5px;
+        }
+
+        .story-title {
+            margin: 0;
+        }
+
+        .story-title a {
+            text-decoration: none;
+            color: #d85a88;
+        }
+
+        .story-title a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Romantic Stories</h1>
+        <div class="nav-buttons">
+            <a href="index.html" class="nav-button">Homepage</a>
+            <a href="publish.html" class="nav-button">Publish</a>
+            <a href="stories.html" class="nav-button">Stories</a>
+        </div>
+    </header>
+
+    <div class="story-list" id="storyList">
+        <h2>Recently Added Stories</h2>
+        <div id="storiesContainer"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Romantic Stories | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        // Function to load stories from local storage and display them
+        function loadStories() {
+            const storedStories = JSON.parse(localStorage.getItem('stories')) || [];
+            const storiesContainer = document.getElementById('storiesContainer');
+
+            storedStories.forEach((story, index) => {
+                const storyItem = document.createElement('div');
+                storyItem.classList.add('story-item');
+
+                // Create cover art element
+                const coverArt = document.createElement('img');
+                coverArt.src = story.coverArt;
+                coverArt.alt = 'Cover Art for ' + story.title;
+                coverArt.classList.add('cover-art');
+
+                // Create story content with a link to the individual story page
+                storyItem.innerHTML = `
+                    <h3 class="story-title"><a href="story.html?id=${index}">${story.title}</a></h3>
+                    <p class="story-author"><strong>By:</strong> ${story.author}</p>
+                    <p>${story.content.substring(0, 150)}...</p>
+                `;
+                storyItem.prepend(coverArt);
+
+                storiesContainer.appendChild(storyItem);
+            });
+        }
+
+        // Load stories on page load
+        window.onload = loadStories;
+    </script>
+</body>
+</html>

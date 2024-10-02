@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom right, #f7e0e7, #fdf5e6);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #d85a88;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        .story-content {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .cover-art {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Story Details</h1>
+    </header>
+
+    <div class="story-content" id="storyContent">
+        <p>Loading story...</p>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Romantic Stories | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        // Function to load the story based on the id parameter in the URL
+        function loadStory() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const storyId = urlParams.get('id');
+            const storedStories = JSON.parse(localStorage.getItem('stories')) || [];
+            const story = storedStories[storyId];
+
+            const storyContent = document.getElementById('storyContent');
+            if (story) {
+                storyContent.innerHTML = `
+                    <img src="${story.coverArt}" alt="Cover Art for ${story.title}" class="cover-art">
+                    <h2>${story.title}</h2>
+                    <p><strong>By:</strong> ${story.author}</p>
+                    <p>${story.content}</p>
+                `;
+            } else {
+                storyContent.innerHTML = '<p>Story not found.</p>';
+            }
+        }
+
+        // Load story on page load
+        window.onload = loadStory;
+    </script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publish a Story</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom right, #f7e0e7, #fdf5e6);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #d85a88;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="file"] {
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #c71585;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #ff69b4;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Publish Your Story</h1>
+    </header>
+
+    <form id="publishForm">
+        <label for="title">Title</label>
+        <input type="text" id="title" required>
+
+        <label for="author">Author Name</label>
+        <input type="text" id="author" required>
+
+        <label for="coverArt">Cover Art (Upload Image)</label>
+        <input type="file" id="coverArt" accept="image/*" required>
+
+        <label for="content">Story Content</label>
+        <textarea id="content" rows="10" required></textarea>
+
+        <button type="submit">Publish Story</button>
+    </form>
+
+    <footer>
+        <p>&copy; 2024 Romantic Stories | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        document.getElementById('publishForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const title = document.getElementById('title').value;
+            const author = document.getElementById('author').value;
+            const content = document.getElementById('content').value;
+            const coverArt = document.getElementById('coverArt').files[0];
+
+            // Create a FileReader to read the uploaded image
+            const reader = new FileReader();
+            reader.onloadend = function () {
+                const story = {
+                    title: title,
+                    author: author,
+                    content: content,
+                    coverArt: reader.result
+                };
+
+                // Save the story in local storage
+                const storedStories = JSON.parse(localStorage.getItem('stories')) || [];
+                storedStories.push(story);
+                localStorage.setItem('stories', JSON.stringify(storedStories));
+
+                // Clear the form
+                document.getElementById('publishForm').reset();
+                alert('Story published successfully!');
+            };
+
+            // Read the uploaded file as a data URL
+            if (coverArt) {
+                reader.readAsDataURL(coverArt);
+            } else {
+                alert('Please upload a cover art image.');
+            }
+        });
+    </script>
+</body>
+</html>
